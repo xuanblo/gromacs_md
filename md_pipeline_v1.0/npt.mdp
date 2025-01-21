@@ -1,0 +1,53 @@
+title = OPLS Lysozyme NPT equilibration
+define = -DPOSRES ; 蛋白位置限制
+
+; 运行参数 
+integrator = md
+nsteps = 50000
+dt = 0.002
+
+; 输出控制 
+nstxout = 500
+nstvout = 500
+nstenergy = 500
+nstlog = 500
+
+; 键约束 
+continuation = yes
+constraint_algorithm = lincs
+constraints = h-bonds
+lincs_iter = 1
+lincs_order = 4
+
+; 非键设置 
+cutoff-scheme = Verlet
+ns_type = grid
+nstlist = 10
+rcoulomb = 1.0
+rvdw = 1.0
+DispCorr = EnerPres
+
+; 静电 
+coulombtype = PME
+pme_order = 4
+fourierspacing = 0.16
+
+; 打开温度耦合 
+tcoupl = V-rescale
+tc-grps = Protein Non-Protein
+tau_t = 0.1 0.1
+ref_t = 300 300
+
+; 打开压力耦合 
+pcoupl = Parrinello-Rahman
+pcoupltype = isotropic
+tau_p = 2.0
+ref_p = 1.0
+compressibility = 4.5e-5
+refcoord_scaling = com
+
+; 周期性边界条件 
+pbc = xyz
+
+; 初始速度生成
+gen_vel = no ; 不随机产生速度
